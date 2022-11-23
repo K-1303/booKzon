@@ -243,23 +243,26 @@ Cocktail
 
 .cocktail {
   background: var(--mainWhite);
-  height: 500px;
+  height: 400px;
   width: 200px;
   margin-bottom: 2rem;
   box-shadow: var(--lightShadow);
   transition: var(--mainTransition);
   display: grid;
   grid-template-rows: auto 1fr;
-  border-radius: var(--mainBorderRadius);
+  border-radius: 2px;
   border-width: 5px;
-  border-color: #222;
+  border-color: rgb(24, 23, 23);
 }
 .cocktail:hover {
   box-shadow: var(--darkShadow);
 }
 .cocktail img {
-  height: 10rem;
-  width: 200px;
+  border-radius: 2px;
+  height: 8rem;
+  width: 100px;
+  margin-top: 4px;
+  margin-left: 47px;
   border-top-left-radius: var(--mainBorderRadius);
   border-top-right-radius: var(--mainBorderRadius);
 }
