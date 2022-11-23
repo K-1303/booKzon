@@ -29,8 +29,7 @@ books_titles = []
 books_json = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data\goodreads_books.json.gz')
 
 with gzip.open(books_json, 'r') as f:
-    i = 200000
-    while (i):
+    while (True):
         line = f.readline()
         if not line:
             break
@@ -43,7 +42,6 @@ with gzip.open(books_json, 'r') as f:
 
         if(ratings > 15) :
             books_titles.append(fields)
-        i = i - 1
 
 titles = pd.DataFrame.from_dict(books_titles)
 titles["ratings"] = pd.to_numeric(titles["ratings"])
@@ -143,11 +141,11 @@ def search_book (request, query='') :
         processed = re.sub("[^a-zA-Z0-9 ]", "", query.lower())
         query_vec = vectorizer.transform([processed])
         similarity = cosine_similarity(query_vec, tfidf).flatten()
-        indices = np.argpartition(similarity, -10)[-10:]
+        indices = np.argpartition(similarity, -10)[-12:]
         results = titles.iloc[indices]
         results = results.sort_values("ratings", ascending=False)
         i = 0
-        while(i < 10) :
+        while(i < 12) :
             book_id = (results.iloc[i]['book_id'])
             title = (results.iloc[i]['title'])
             url = (results.iloc[i]['url'])
