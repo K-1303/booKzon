@@ -1,7 +1,11 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 const Book = ({id, name, url, image }) => {
+
+  if(name.length > 90) {
+    name = name.substring(0, 20) + "...";
+  }
+
   return (
     <article className='cocktail'>
       <div className='img-container'>

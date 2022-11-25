@@ -122,14 +122,12 @@ Buttons
   text-align: center;
 }
 .btn-details {
+  height: 30px;
   padding: 0.25rem 0.4rem;
 }
 .btn-details:hover {
   background: var(--primaryLightColor);
   border-color: var(--primaryLightColor);
-}
-.btn-serach {
-  height: 20px;
 }
 /* 
 ====== 
