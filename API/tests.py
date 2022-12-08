@@ -6,48 +6,7 @@ import pandas as pd
 import numpy as np
 import re
 import os
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
 
-vectorizer = TfidfVectorizer()
-
-def parse_fields(line):
-    data = json.loads(line)
-    return {
-        "book_id":data["book_id"],
-        "title":data["title_without_series"],
-        "ratings":data["ratings_count"],
-        "url":data["url"],
-        "cover_image":data["image_url"]
-    }
-
-books_titles = []
-books_json = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data\goodreads_books.json.gz')
-
-with gzip.open(books_json, 'r') as f:
-    while (True):
-        line = f.readline()
-        if not line:
-            break
-        fields = parse_fields(line)
-
-        try:
-            ratings = int(fields["ratings"])
-        except ValueError:
-            continue
-
-        if(ratings > 15) :
-            books_titles.append(fields)
-
-titles = pd.DataFrame.from_dict(books_titles)
-titles["ratings"] = pd.to_numeric(titles["ratings"])
-titles["mod_title"] = titles["title"].str.replace("[^a-zA-Z0-9 ]", "", regex=True)
-titles["mod_title"] = titles["mod_title"].str.lower()
-titles["mod_title"] = titles["mod_title"].str.replace("\s+", " ", regex=True)
-titles = titles[titles["mod_title"].str.len() > 0]
-titles.to_json("books_titles.json")
-
-"""
 csv_book_mapping = {}
 
 with open("Data\\book_id_map.csv", 'r') as f:
@@ -60,10 +19,12 @@ with open("Data\\book_id_map.csv", 'r') as f:
 
 def rec_books (liked_books) :
     overlap_users = set()
-
+    # for i in range 1 to 100
+    # for i in range 1 to 0.1Million
+# finding users
     with open("Data\goodreads_interactions.csv", 'r') as f:
-        i = 1000000
-        while (i):
+        i = 10000000
+        while (True):
             line = f.readline()
 
             if not line:
@@ -83,14 +44,15 @@ def rec_books (liked_books) :
 
             if book_id in liked_books and rating >= 4 :
                 overlap_users.add(user_id)
+        # users found
         
-            i = i - 1
 
     rec_lines = []
 
+        # what books those users have read
     with open("Data\goodreads_interactions.csv", 'r') as f:
-        i = 1000000
-        while (i):
+        i = 10000000
+        while (True):
             line = f.readline()
 
             if not line:
@@ -101,9 +63,9 @@ def rec_books (liked_books) :
             if user_id in overlap_users :
                 book_id = csv_book_mapping[csv_id]
                 rec_lines.append([user_id, book_id, rating])
+        # what books those users have read -- done
         
-            i = i - 1
-
+    #adding to site
     recs = pd.DataFrame(rec_lines, columns=["user_id", "book_id", "rating"])
     recs["book_id"] = recs["book_id"].astype(str)
 
@@ -113,6 +75,7 @@ def rec_books (liked_books) :
     books_titles = pd.read_json("books_titles.json")
     books_titles["book_id"] = books_titles["book_id"].astype(str)
     books_titles[books_titles["book_id"].isin(top_recs)]  
+    #added to site
 
 
     all_recs = recs["book_id"].value_counts()
@@ -123,9 +86,11 @@ def rec_books (liked_books) :
     all_recs.sort_values("score", ascending=False).head(10)
     popular_recs = all_recs[all_recs["book_count"] > 10].sort_values("score", ascending=False)
     print(popular_recs[~popular_recs["book_id"].isin(liked_books)].head(10))
+    # for i in range 1 to 0.1Million end
+    # for i in range 1 to 100 end
+    
 
-my_books = ["4408", "3114", "2998", "9401", "8153", "204949"]
-#my_books = ["4408", "31147619", "29983711", "9401317", "8153988", "20494944"]
+#my_books = ["4408", "3114", "2998", "9401", "8153", "204949"]
+my_books = ["4408", "31147619", "29983711", "9401317", "8153988", "20494944"]
 rec_books(my_books)
 
-"""

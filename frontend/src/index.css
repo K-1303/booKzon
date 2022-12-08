@@ -266,6 +266,9 @@ Cocktail
 }
 .cocktail-footer {
   padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .cocktail-footer h3,
 .cocktail-footer h4,
@@ -273,7 +276,8 @@ Cocktail
   margin-bottom: 0.3rem;
 }
 .cocktail-footer h3 {
-  font-size: 1rem;
+  font-size: 1.15rem;
+  letter-spacing: unset;
 }
 .cocktail-footer p {
   color: var(--darkGrey);
@@ -306,6 +310,7 @@ Form
   font-weight: bold;
   letter-spacing: 0.25rem;
   color: var(--primaryColor);
+  text-align: center;
 }
 .form-control input {
   width: 75%;
@@ -315,6 +320,10 @@ Form
   border-radius: var(--mainBorderRadius);
   padding: 0.5rem;
   font-size: 1.2rem;
+}
+.search-bar {
+  display: flex;
+  justify-content: space-evenly;
 }
 /* 
 ====== 

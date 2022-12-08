@@ -17,8 +17,9 @@ export default function SearchForm() {
   return (
     <section className='section search'>
       <form className='search-form' onSubmit={handleSubmit}>
-        <div className='form-control'>
+        <section className='form-control'>
           <label htmlFor='name'>search your favorite books</label>
+          <div className='search-bar'>
           <input
             type='text'
             name='name'
@@ -26,7 +27,8 @@ export default function SearchForm() {
             ref={searchValue}
           />
           <button type='button' className='btn btn-primary btn-search' onClick={searchCocktail}>search</button>
-        </div>
+          </div>
+        </section>
       </form>
     </section>
   )

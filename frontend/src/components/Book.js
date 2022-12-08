@@ -3,7 +3,7 @@ import React from 'react'
 const Book = ({id, name, url, image }) => {
 
   if(name.length > 90) {
-    name = name.substring(0, 20) + "...";
+    name = name.substring(0, 87) + "...";
   }
 
   return (
