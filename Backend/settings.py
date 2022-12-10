@@ -40,9 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'API',
+    'cookies',
 ]
-
-SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
