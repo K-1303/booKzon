@@ -1,4 +1,4 @@
-from django.test import TestCase
+"""from django.test import TestCase
 
 import gzip
 import json
@@ -94,3 +94,4 @@ def rec_books (liked_books) :
 my_books = ["4408", "31147619", "29983711", "9401317", "8153988", "20494944"]
 rec_books(my_books)
 
+"""

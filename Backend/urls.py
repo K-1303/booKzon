@@ -24,7 +24,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('', include('API.urls')),
-    path('', include('cookies.urls')),
     path('', index),
     path('favicon.ico', RedirectView.as_view(url=staticfiles_storage.url('favicon.ico')))
 ]

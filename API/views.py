@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from datetime import datetime, timedelta
 from rest_framework.response import Response
 from .models import Books
 from .serializer import LeadSerializer
@@ -29,7 +30,8 @@ books_titles = []
 books_json = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data\goodreads_books.json.gz')
 
 with gzip.open(books_json, 'r') as f:
-    while (True):
+    i = 10000
+    while (i):
         line = f.readline()
         if not line:
             break
@@ -42,7 +44,7 @@ with gzip.open(books_json, 'r') as f:
 
         if(ratings > 15) :
             books_titles.append(fields)
-
+    i = i - 1
 titles = pd.DataFrame.from_dict(books_titles)
 titles["ratings"] = pd.to_numeric(titles["ratings"])
 titles["mod_title"] = titles["title"].str.replace("[^a-zA-Z0-9 ]", "", regex=True)
@@ -135,6 +137,15 @@ my_books = ["4408", "3114", "2998", "9401", "8153", "204949"]
 rec_books(my_books)
 
 """
+def setcookie(request):
+    response =  Response('success', template_name=None)
+    response.set_cookie('key', 'value', expires=datetime.utcnow()+timedelta(days=5))
+    return response
+
+def getcookie(request):
+    key = request.COOKIES.get['key']
+    return Response(key, template_name=None)
+
 @api_view()
 def search_book (request, query='') :
         Books.objects.all().delete()
