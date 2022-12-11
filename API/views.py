@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from datetime import datetime, timedelta
+from django.http import HttpResponse
 from rest_framework.response import Response
 from .models import Books
 from .serializer import LeadSerializer
@@ -137,14 +138,10 @@ my_books = ["4408", "3114", "2998", "9401", "8153", "204949"]
 rec_books(my_books)
 
 """
-def setcookie(request):
-    response =  Response('success', template_name=None)
+def set_cookies(request):
+    response = HttpResponse("<h1>success</h1>")
     response.set_cookie('key', 'value', expires=datetime.utcnow()+timedelta(days=5))
     return response
-
-def getcookie(request):
-    key = request.COOKIES.get['key']
-    return Response(key, template_name=None)
 
 @api_view()
 def search_book (request, query='') :
@@ -155,6 +152,8 @@ def search_book (request, query='') :
         indices = np.argpartition(similarity, -10)[-12:]
         results = titles.iloc[indices]
         results = results.sort_values("ratings", ascending=False)
+        set_cookies(request)
+        value = request.COOKIES.get('key')
         i = 0
         while(i < 12) :
             book_id = (results.iloc[i]['book_id'])
