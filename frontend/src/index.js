@@ -3,10 +3,14 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 import { AppProvider } from './context'
+import {CookiesProvider} from "react-cookie"
+
 ReactDOM.render(
   <React.StrictMode>
     <AppProvider>
-    <App />
+      <CookiesProvider>
+       <App />
+      </CookiesProvider>
     </AppProvider>
   </React.StrictMode>,
   document.getElementById('root')
