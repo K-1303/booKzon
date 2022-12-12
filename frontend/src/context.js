@@ -22,7 +22,8 @@ const AppProvider = ({ children }) => {
           const{id, title, url, cover_image} = item;
           return {id:id, name:title, url:url, image:cover_image};
         })
-        setCookies("user", (books_id ,data[0].book_id , data[1].book_id), {path: "/", maxAge: 31536000});
+        books_id = [...books_id ,data[0].book_id, data[1].book_id]
+        setCookies("user", [...books_id], {path: "/", maxAge: 31536000});
         setBooks(newBooks)
       }
       else {
