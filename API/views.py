@@ -31,8 +31,8 @@ books_titles = []
 books_json = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data\goodreads_books.json.gz')
 
 with gzip.open(books_json, 'r') as f:
-    #i = 100000
-    while (True):
+    i = 100000
+    while (i):
         line = f.readline()
         if not line:
             break
@@ -45,7 +45,7 @@ with gzip.open(books_json, 'r') as f:
 
         if(ratings > 15) :
             books_titles.append(fields)
-        #i = i - 1
+        i = i - 1
 titles = pd.DataFrame.from_dict(books_titles)
 titles["ratings"] = pd.to_numeric(titles["ratings"])
 titles["mod_title"] = titles["title"].str.replace("[^a-zA-Z0-9 ]", "", regex=True)

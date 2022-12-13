@@ -30,9 +30,24 @@ const AppProvider = ({ children }) => {
             setCookies("user", [...books_id], {path: "/", maxAge: 31536000});
           }
           else {
+            if((cookies.user).length == 12) {
+              books_id = [...books_id, "0"]
+            }
+
             books_id = cookies.user
-            books_id[0] = data[0].book_id
-            books_id[1] = data[1].book_id
+
+            if (parseInt(books_id[12]) < (((cookies.user).length) - 1)) {
+              books_id[parseInt(books_id[12])] = data[0].book_id
+              books_id[parseInt(books_id[12]) + 1] = data[1].book_id
+              books_id[12] = parseInt(books_id[12]) + 2
+            }
+            else {
+              books_id[12] = "0"
+              books_id[parseInt(books_id[12])] = data[0].book_id
+              books_id[parseInt(books_id[12]) + 1] = data[1].book_id
+              books_id[12] = parseInt(books_id[12]) + 2
+            }
+
             setCookies("user", [...books_id], {path: "/", maxAge: 31536000});
           }
         }

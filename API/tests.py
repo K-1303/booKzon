@@ -52,8 +52,8 @@ def rec_books (liked_books) :
 
         # what books those users have read
     with open("Data\goodreads_interactions.csv", 'r') as f:
-        i = 10000000
-        while (True):
+        i = 20000000
+        while (i):
             line = f.readline()
 
             if not line:
@@ -71,15 +71,9 @@ def rec_books (liked_books) :
     recs = pd.DataFrame(rec_lines, columns=["user_id", "book_id", "rating"])
     recs["book_id"] = recs["book_id"].astype(str)
 
-    top_recs = recs["book_id"].value_counts().head(10)
-    top_recs = top_recs.index.values
-
     books_titles = pd.read_json("books_titles.json")
-    books_titles["book_id"] = books_titles["book_id"].astype(str)
-    books_titles[books_titles["book_id"].isin(top_recs)]  
-    #added to site
-
-
+    books_titles["book_id"] = books_titles["book_id"].astype(str) 
+    
     all_recs = recs["book_id"].value_counts()
     all_recs = all_recs.to_frame().reset_index()
     all_recs.columns = ["book_id", "book_count"]
@@ -88,9 +82,11 @@ def rec_books (liked_books) :
     all_recs.sort_values("score", ascending=False).head(10)
     popular_recs = all_recs[all_recs["book_count"] > 10].sort_values("score", ascending=False)
     print(popular_recs[~popular_recs["book_id"].isin(liked_books)])
+    #added to site
     # for i in range 1 to 0.1Million end
     # for i in range 1 to 100 end
     
-my_books = ["213030","17316670", "366330", "125139", "704172", "25710705"]
+my_books = ["213030", "366330", "125139", "704172"]
+#my_books = ["213030","17316670", "366330", "125139", "704172", "25710705"]
 rec_books(my_books)
 
