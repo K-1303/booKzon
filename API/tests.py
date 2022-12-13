@@ -1,4 +1,4 @@
-"""from django.test import TestCase
+from django.test import TestCase
 
 import gzip
 import json
@@ -24,7 +24,7 @@ def rec_books (liked_books) :
 # finding users
     with open("Data\goodreads_interactions.csv", 'r') as f:
         i = 10000000
-        while (True):
+        while (i):
             line = f.readline()
 
             if not line:
@@ -44,6 +44,7 @@ def rec_books (liked_books) :
 
             if book_id in liked_books and rating >= 4 :
                 overlap_users.add(user_id)
+            i = i - 1
         # users found
         
 
@@ -64,6 +65,7 @@ def rec_books (liked_books) :
                 book_id = csv_book_mapping[csv_id]
                 rec_lines.append([user_id, book_id, rating])
         # what books those users have read -- done
+            i = i - 1
         
     #adding to site
     recs = pd.DataFrame(rec_lines, columns=["user_id", "book_id", "rating"])
@@ -85,13 +87,10 @@ def rec_books (liked_books) :
     all_recs["score"] = all_recs["book_count"] * (all_recs["book_count"] / all_recs["ratings"])
     all_recs.sort_values("score", ascending=False).head(10)
     popular_recs = all_recs[all_recs["book_count"] > 10].sort_values("score", ascending=False)
-    print(popular_recs[~popular_recs["book_id"].isin(liked_books)].head(10))
+    print(popular_recs[~popular_recs["book_id"].isin(liked_books)])
     # for i in range 1 to 0.1Million end
     # for i in range 1 to 100 end
     
-
-#my_books = ["4408", "3114", "2998", "9401", "8153", "204949"]
-my_books = ["4408", "31147619", "29983711", "9401317", "8153988", "20494944"]
+my_books = ["213030","17316670", "366330", "125139", "704172", "25710705"]
 rec_books(my_books)
 
-"""

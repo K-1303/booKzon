@@ -4,7 +4,7 @@ import {useCookies} from "react-cookie"
 
 const url = 'http://127.0.0.1:8000/api/'
 const AppContext = React.createContext()
-let books_id = ["4408", "31147619", "29983711", "9401317"]
+let books_id = ["366330", "125139", "704172", "25710705"]
 
 const AppProvider = ({ children }) => {
 
@@ -23,8 +23,22 @@ const AppProvider = ({ children }) => {
           const{id, title, url, cover_image} = item;
           return {id:id, name:title, url:url, image:cover_image};
         })
-        books_id = [...books_id ,data[0].book_id, data[1].book_id]
-        setCookies("user", [...books_id], {path: "/", maxAge: 31536000});
+        if (cookies.user) {
+          if((cookies.user).length < 12){
+            books_id = cookies.user
+            books_id = [...books_id ,data[0].book_id, data[1].book_id]
+            setCookies("user", [...books_id], {path: "/", maxAge: 31536000});
+          }
+          else {
+            books_id = cookies.user
+            books_id[0] = data[0].book_id
+            books_id[1] = data[1].book_id
+            setCookies("user", [...books_id], {path: "/", maxAge: 31536000});
+          }
+        }
+        else {
+          setCookies("user", [...books_id], {path: "/", maxAge: 31536000});
+        }
         setBooks(newBooks)
       }
       else {
