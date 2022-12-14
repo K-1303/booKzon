@@ -23,7 +23,7 @@ def rec_books (liked_books) :
     # for i in range 1 to 0.1Million
 # finding users
     with open("Data\goodreads_interactions.csv", 'r') as f:
-        i = 10000000
+        i = 100000000
         while (i):
             line = f.readline()
 
@@ -52,7 +52,7 @@ def rec_books (liked_books) :
 
         # what books those users have read
     with open("Data\goodreads_interactions.csv", 'r') as f:
-        i = 10000000
+        i = 100000000
         while (i):
             line = f.readline()
 
@@ -86,6 +86,6 @@ def rec_books (liked_books) :
     # for i in range 1 to 0.1Million end
     # for i in range 1 to 100 end
     
-my_books = ["213030", "25545994", "18859629", "148020", "15844113", "25030367", "475675", "2214140"]
+my_books = ["213030", "25545994", "18859629", "148020", "15844113", "25030367", "475675", "221414"]
 rec_books(my_books)
 

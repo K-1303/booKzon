@@ -133,7 +133,6 @@ def rec_books (liked_books) :
     popular_recs = all_recs[all_recs["book_count"] > 10].sort_values("score", ascending=False)
     print(popular_recs[~popular_recs["book_id"].isin(liked_books)].head(10))
 
-my_books = ["4408", "3114", "2998", "9401", "8153", "204949"]
 #my_books = ["4408", "31147619", "29983711", "9401317", "8153988", "20494944"]
 rec_books(my_books)
 
