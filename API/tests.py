@@ -52,7 +52,7 @@ def rec_books (liked_books) :
 
         # what books those users have read
     with open("Data\goodreads_interactions.csv", 'r') as f:
-        i = 20000000
+        i = 10000000
         while (i):
             line = f.readline()
 
@@ -81,12 +81,11 @@ def rec_books (liked_books) :
     all_recs["score"] = all_recs["book_count"] * (all_recs["book_count"] / all_recs["ratings"])
     all_recs.sort_values("score", ascending=False).head(10)
     popular_recs = all_recs[all_recs["book_count"] > 10].sort_values("score", ascending=False)
-    print(popular_recs[~popular_recs["book_id"].isin(liked_books)])
+    print(popular_recs[~popular_recs["book_id"].isin(liked_books)].head(10))
     #added to site
     # for i in range 1 to 0.1Million end
     # for i in range 1 to 100 end
     
-my_books = ["213030", "366330", "125139", "704172"]
-#my_books = ["213030","17316670", "366330", "125139", "704172", "25710705"]
+my_books = ["213030", "25545994", "18859629", "148020", "15844113", "25030367", "475675", "2214140"]
 rec_books(my_books)
 

@@ -1,10 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { useCallback } from 'react'
 import {useCookies} from "react-cookie"
+import {v4 as uuid} from 'uuid'
 
 const url = 'http://127.0.0.1:8000/api/'
 const AppContext = React.createContext()
-let books_id = ["366330", "125139", "704172", "25710705"]
+const user_id = uuid().slice(0, 8);
+let books_id = [user_id, "213030", "25545994", "18859629", "148020", "15844113", "25030367", "475675", "2214140"]
 
 const AppProvider = ({ children }) => {
 
@@ -23,35 +25,39 @@ const AppProvider = ({ children }) => {
           const{id, title, url, cover_image} = item;
           return {id:id, name:title, url:url, image:cover_image};
         })
-        if (cookies.user) {
-          if((cookies.user).length < 12){
+        if (cookies.user && searchTerm != 'machine learning') {
+          if((cookies.user).length < 17){
             books_id = cookies.user
-            books_id = [...books_id ,data[0].book_id, data[1].book_id]
+            books_id = [...books_id ,data[0].book_id, data[1].book_id, data[2].book_id, data[3].book_id]
             setCookies("user", [...books_id], {path: "/", maxAge: 31536000});
           }
           else {
-            if((cookies.user).length == 12) {
-              books_id = [...books_id, "0"]
+            if((cookies.user).length == 17) {
+              books_id = [...books_id, "1"]
             }
 
             books_id = cookies.user
 
-            if (parseInt(books_id[12]) < (((cookies.user).length) - 1)) {
-              books_id[parseInt(books_id[12])] = data[0].book_id
-              books_id[parseInt(books_id[12]) + 1] = data[1].book_id
-              books_id[12] = parseInt(books_id[12]) + 2
+            if (parseInt(books_id[17]) < (((cookies.user).length) - 1)) {
+              books_id[parseInt(books_id[17])] = data[0].book_id
+              books_id[parseInt(books_id[17]) + 1] = data[1].book_id
+              books_id[parseInt(books_id[17]) + 2] = data[2].book_id
+              books_id[parseInt(books_id[17]) + 3] = data[3].book_id
+              books_id[17] = parseInt(books_id[17]) + 4
             }
             else {
-              books_id[12] = "0"
-              books_id[parseInt(books_id[12])] = data[0].book_id
-              books_id[parseInt(books_id[12]) + 1] = data[1].book_id
-              books_id[12] = parseInt(books_id[12]) + 2
+              books_id[17] = "1"
+              books_id[parseInt(books_id[17])] = data[0].book_id
+              books_id[parseInt(books_id[17]) + 1] = data[1].book_id
+              books_id[parseInt(books_id[17]) + 2] = data[2].book_id
+              books_id[parseInt(books_id[17]) + 3] = data[3].book_id
+              books_id[17] = parseInt(books_id[17]) + 4
             }
 
             setCookies("user", [...books_id], {path: "/", maxAge: 31536000});
           }
         }
-        else {
+        else if(!cookies.user) {
           setCookies("user", [...books_id], {path: "/", maxAge: 31536000});
         }
         setBooks(newBooks)

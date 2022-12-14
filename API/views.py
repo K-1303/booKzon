@@ -31,7 +31,7 @@ books_titles = []
 books_json = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data\goodreads_books.json.gz')
 
 with gzip.open(books_json, 'r') as f:
-    i = 100000
+    i = 1000000
     while (i):
         line = f.readline()
         if not line:
