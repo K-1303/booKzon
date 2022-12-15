@@ -32,7 +32,7 @@ books_json = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data\goo
 
 with gzip.open(books_json, 'r') as f:
     i = 1000000
-    while (i):
+    while (True):
         line = f.readline()
         if not line:
             break
