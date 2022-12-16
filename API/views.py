@@ -1,10 +1,9 @@
 from django.shortcuts import render
-from datetime import datetime, timedelta
-from django.http import HttpResponse
 from rest_framework.response import Response
 from .models import Books
 from .serializer import LeadSerializer
 from rest_framework.decorators import api_view
+from django.http import HttpResponse
 
 import gzip
 import json
@@ -32,7 +31,7 @@ books_json = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data\goo
 
 with gzip.open(books_json, 'r') as f:
     i = 1000000
-    while (True):
+    while (i):
         line = f.readline()
         if not line:
             break
@@ -52,14 +51,17 @@ titles["mod_title"] = titles["title"].str.replace("[^a-zA-Z0-9 ]", "", regex=Tru
 titles["mod_title"] = titles["mod_title"].str.lower()
 titles["mod_title"] = titles["mod_title"].str.replace("\s+", " ", regex=True)
 titles = titles[titles["mod_title"].str.len() > 0]
+
+#Uncomment below comment on first run
 #titles.to_json("books_titles.json")
 
 tfidf = vectorizer.fit_transform(titles["mod_title"])
 
-"""
-csv_book_mapping = {}
 
-with open("Data\\book_id_map.csv", 'r') as f:
+csv_book_mapping = {}
+book_id_map = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data\\book_id_map.csv')
+
+with open(book_id_map, 'r') as f:
     while True :
         line = f.readline()
         if not line:
@@ -71,7 +73,7 @@ def rec_books (liked_books) :
     overlap_users = set()
 
     with open("Data\goodreads_interactions.csv", 'r') as f:
-        i = 1000000
+        i = 100000000
         while (i):
             line = f.readline()
 
@@ -98,7 +100,7 @@ def rec_books (liked_books) :
     rec_lines = []
 
     with open("Data\goodreads_interactions.csv", 'r') as f:
-        i = 1000000
+        i = 100000000
         while (i):
             line = f.readline()
 
@@ -131,12 +133,11 @@ def rec_books (liked_books) :
     all_recs["score"] = all_recs["book_count"] * (all_recs["book_count"] / all_recs["ratings"])
     all_recs.sort_values("score", ascending=False).head(10)
     popular_recs = all_recs[all_recs["book_count"] > 10].sort_values("score", ascending=False)
-    print(popular_recs[~popular_recs["book_id"].isin(liked_books)].head(10))
+    return popular_recs[~popular_recs["book_id"].isin(liked_books)].head(10)
 
 #my_books = ["4408", "31147619", "29983711", "9401317", "8153988", "20494944"]
-rec_books(my_books)
-
-"""
+my_books = ["213030", "25545994", "18859629", "148020", "15844113", "25030367", "475675", "2214140"]
+#initial_rec = rec_books(my_books)
 
 @api_view()
 def search_book (request, query='') :
@@ -147,7 +148,6 @@ def search_book (request, query='') :
         indices = np.argpartition(similarity, -10)[-12:]
         results = titles.iloc[indices]
         results = results.sort_values("ratings", ascending=False)
-        #value = request.COOKIES.get('user')
         i = 0
         while(i < 12) :
             book_id = (results.iloc[i]['book_id'])
@@ -160,5 +160,6 @@ def search_book (request, query='') :
         serializer = LeadSerializer(books, many=True)
         return Response(serializer.data, template_name=None)
     
-        
-
+def get_reccommendations(request, user_id):
+    value = request.COOKIES.get('user')
+    return HttpResponse(value)
