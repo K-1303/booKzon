@@ -3,7 +3,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from . import views
 
 urlpatterns = [
-    path('api/rec/<str:user_id>/', views.get_reccommendations),
+    path('api/rec/<str:user_id>/', views.get_recommendations),
     path('api/<str:query>/', views.search_book),
 ]
 
