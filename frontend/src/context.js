@@ -13,6 +13,7 @@ const AppProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('machine learning');
   const [books, setBooks] = useState([]);
+  const [recBooks, setRecBooks] = useState([]);
   const [cookies, setCookies] = useCookies(["user", books_id])
 
   const fetchBooks = useCallback(async () => {
@@ -72,12 +73,34 @@ const AppProvider = ({ children }) => {
     }
   }, [searchTerm])
 
+  const fetchRecBooks = useCallback(async () => {
+    try {
+      const response = await fetch(`${'http://127.0.0.1:8000/api/rec/'}${cookies.user[0]}`)
+      const data = await response.json();
+      if(data) {
+        const newBooks = data.map((item)=>{
+          const{id, title, url, cover_image} = item;
+          return {id:id, name:title, url:url, image:cover_image};
+        })
+        setRecBooks(newBooks)
+      }
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+      setLoading(false)
+    }
+  }, [cookies.user])
+
+  useEffect(() => {
+    fetchRecBooks()
+  }, [cookies.user, fetchBooks])
+
   useEffect(() => {
     fetchBooks()
   }, [searchTerm, fetchBooks])
   return (
     <AppContext.Provider value={{
-      loading, books, searchTerm, setSearchTerm, cookies
+      loading, books, recBooks, searchTerm, setSearchTerm, cookies
     }}>
       {children}
     </AppContext.Provider>
