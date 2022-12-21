@@ -43,6 +43,7 @@ with gzip.open(books_json, 'r') as f:
 
         if(ratings > 15) :
             books_titles.append(fields)
+        i = i - 1
             
 titles = pd.DataFrame.from_dict(books_titles)
 titles["ratings"] = pd.to_numeric(titles["ratings"])
@@ -72,7 +73,8 @@ def rec_books (liked_books) :
     overlap_users = set()
     goodreads_interactions = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data\goodreads_interactions.csv')
     with open(goodreads_interactions, 'r') as f:
-        i = 100000000
+        #Data includes 230 million rows. Increase i as per your device
+        i = 10000000
         while (i):
             line = f.readline()
 
@@ -99,7 +101,8 @@ def rec_books (liked_books) :
     rec_lines = []
 
     with open(goodreads_interactions, 'r') as f:
-        i = 100000000
+        #Increase i as per your device
+        i = 10000000
         while (i):
             line = f.readline()
 
@@ -113,14 +116,15 @@ def rec_books (liked_books) :
                 rec_lines.append([user_id, book_id, rating])
         
             i = i - 1
-
+   
     recs = pd.DataFrame(rec_lines, columns=["user_id", "book_id", "rating"])
     recs["book_id"] = recs["book_id"].astype(str)
 
     top_recs = recs["book_id"].value_counts().head(10)
     top_recs = top_recs.index.values
-
-    books_titles = pd.read_json("books_titles.json")
+    
+    book_titles_json = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'books_titles.json')
+    books_titles = pd.read_json(book_titles_json)
     books_titles["book_id"] = books_titles["book_id"].astype(str)
     books_titles[books_titles["book_id"].isin(top_recs)]  
 
@@ -156,9 +160,9 @@ def search_book (request, query='') :
         return Response(serializer.data, template_name=None)
 
 @api_view()
-def get_recommendations(request, user_id):
+def get_recommendations(request):
     value = request.COOKIES.get('user')
-    books = ["0", "1"]
+    books = []
     for i in range(0, len(value) - 1):
         if value[i] == 'C' and value[i + 1] == '%':
             book_id = ''

@@ -73,9 +73,15 @@ const AppProvider = ({ children }) => {
     }
   }, [searchTerm])
 
+  useEffect(() => {
+    fetchBooks()
+    fetchRecBooks()
+  }, [searchTerm, fetchBooks])
+
   const fetchRecBooks = useCallback(async () => {
+    setLoading(true)
     try {
-      const response = await fetch(`${'http://127.0.0.1:8000/api/rec/'}${cookies.user[0]}`)
+      const response = await fetch(`${url}${'user/rec'}`)
       const data = await response.json();
       if(data) {
         const newBooks = data.map((item)=>{
@@ -89,15 +95,8 @@ const AppProvider = ({ children }) => {
       console.log(error)
       setLoading(false)
     }
-  }, [cookies.user])
+  }, [searchTerm])
 
-  useEffect(() => {
-    fetchRecBooks()
-  }, [cookies.user, fetchBooks])
-
-  useEffect(() => {
-    fetchBooks()
-  }, [searchTerm, fetchBooks])
   return (
     <AppContext.Provider value={{
       loading, books, recBooks, searchTerm, setSearchTerm, cookies
