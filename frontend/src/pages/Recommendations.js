@@ -4,10 +4,15 @@ import Loading from './Loading'
 import { useGlobalContext } from '../context'
 
 const About = () => {
-  const {recBooks, loading} = useGlobalContext();
+  const {recBooks, recLoading} = useGlobalContext();
 
-  if(loading) {
-    return <Loading />
+  if(recLoading) {
+    return (
+      <div>
+        <Loading />
+        <div className='cocktail-footer'><h3>Creating  Recommendations.....</h3></div>
+      </div>
+    )
   }
 
   return (

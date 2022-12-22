@@ -30,7 +30,8 @@ books_titles = []
 books_json = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data\goodreads_books.json.gz')
 
 with gzip.open(books_json, 'r') as f:
-    while (True):
+    i = 1000000
+    while (i):
         line = f.readline()
         if not line:
             break
@@ -43,8 +44,8 @@ with gzip.open(books_json, 'r') as f:
 
         if(ratings > 15) :
             books_titles.append(fields)
+        
         i = i - 1
-            
 titles = pd.DataFrame.from_dict(books_titles)
 titles["ratings"] = pd.to_numeric(titles["ratings"])
 titles["mod_title"] = titles["title"].str.replace("[^a-zA-Z0-9 ]", "", regex=True)
@@ -73,7 +74,7 @@ def rec_books (liked_books) :
     overlap_users = set()
     goodreads_interactions = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data\goodreads_interactions.csv')
     with open(goodreads_interactions, 'r') as f:
-        #Data includes 230 million rows. Increase i as per your device
+        #Data includes 230 million rows. Set i as per your device
         i = 10000000
         while (i):
             line = f.readline()
@@ -101,7 +102,7 @@ def rec_books (liked_books) :
     rec_lines = []
 
     with open(goodreads_interactions, 'r') as f:
-        #Increase i as per your device
+        #Set i as per your device
         i = 10000000
         while (i):
             line = f.readline()
@@ -175,7 +176,7 @@ def get_recommendations(request):
     recommendations = rec_books(books)
     Books.objects.all().delete()
     i = 0
-    while(i < 12) :
+    while(i < len(recommendations)) :
         book_id = (recommendations.iloc[i]['book_id'])
         title = (recommendations.iloc[i]['title'])
         url = (recommendations.iloc[i]['url'])

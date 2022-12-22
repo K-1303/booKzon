@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 // import pages
 import Home from './pages/Home'
-import About from './pages/About'
+import Recommendations from './pages/Recommendations'
 import Error from './pages/Error'
 // import components
 import Navbar from './components/Navbar'
@@ -14,8 +14,8 @@ function App() {
         <Route exact path="/">
           <Home />
         </Route>
-        <Route path="/about">
-          <About />
+        <Route path="/Recommendations">
+          <Recommendations />
         </Route>
         <Route path="*">
           <Error />

@@ -11,6 +11,7 @@ let books_id = [user_id, "213030", "25545994", "18859629", "148020", "15844113",
 const AppProvider = ({ children }) => {
 
   const [loading, setLoading] = useState(true);
+  const [recLoading, setRecLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('machine learning');
   const [books, setBooks] = useState([]);
   const [recBooks, setRecBooks] = useState([]);
@@ -79,27 +80,30 @@ const AppProvider = ({ children }) => {
   }, [searchTerm, fetchBooks])
 
   const fetchRecBooks = useCallback(async () => {
-    setLoading(true)
+    setRecLoading(true)
     try {
-      const response = await fetch(`${url}${'user/rec'}`)
-      const data = await response.json();
-      if(data) {
-        const newBooks = data.map((item)=>{
-          const{id, title, url, cover_image} = item;
-          return {id:id, name:title, url:url, image:cover_image};
-        })
+      if(cookies.user) {
+        const response = await fetch(`${url}${'user/rec'}`)
+        const data = await response.json();
+      
+        if(data) {
+          const newBooks = data.map((item)=>{
+            const{id, title, url, cover_image} = item;
+            return {id:id, name:title, url:url, image:cover_image};
+          })
         setRecBooks(newBooks)
       }
-      setLoading(false)
+    }
+      setRecLoading(false)
     } catch (error) {
       console.log(error)
-      setLoading(false)
+      setRecLoading(false)
     }
   }, [searchTerm])
 
   return (
     <AppContext.Provider value={{
-      loading, books, recBooks, searchTerm, setSearchTerm, cookies
+      loading, recLoading, books, recBooks, searchTerm, setSearchTerm, cookies
     }}>
       {children}
     </AppContext.Provider>
