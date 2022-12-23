@@ -14,7 +14,18 @@ To download data files follow below links:
 Make a folder of name:'Data' in API folder and put these files into it.
 
 Run these commands in terminal to run the project:
-pip install -r requirements.txt to install backend dependencies
-cd frontend to access frontend folder
-npm install to intall frontend dependencies
-npm run build to build static files
+- pip install -r requirements.txt to install backend dependencies
+- cd frontend to access frontend folder
+- npm install to intall frontend dependencies
+- npm run build to build the app for production to the build folder.
+- cd .. to access root folder
+- python manage.py makemigrations to make migrations
+- python manage.py migrate to migrate
+- python manage.py runserver to run the local server
+
+Then, navigate to http://127.0.0.1:8000/ in your browser
+
+
+
+
+
