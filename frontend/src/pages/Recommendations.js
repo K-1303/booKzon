@@ -10,7 +10,7 @@ const About = () => {
     return (
       <div>
         <Loading />
-        <div className='cocktail-footer'><h3>Creating  Recommendations.....</h3></div>
+        <div className='cocktail-footer'><h2>Creating  Recommendations.....</h2></div>
       </div>
     )
   }

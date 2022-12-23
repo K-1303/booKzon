@@ -272,11 +272,20 @@ Cocktail
   flex-direction: column;
   align-items: center;
 }
+
+.cocktail-footer h2,
 .cocktail-footer h3,
 .cocktail-footer h4,
 .cocktail-footer p {
   margin-bottom: 0.3rem;
 }
+
+.cocktail-footer h2 {
+  font-size: 1.15rem;
+  letter-spacing: unset;
+  color: darkgreen;
+}
+
 .cocktail-footer h3 {
   font-size: 1.15rem;
   letter-spacing: unset;
@@ -434,7 +443,3 @@ Cocktail
   }
 }
 
-.book_rec {
-  color: #466c2a;
-  margin-top: 100px;
-}

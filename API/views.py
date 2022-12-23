@@ -73,7 +73,7 @@ def rec_books (liked_books) :
     goodreads_interactions = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data\goodreads_interactions.csv')
     with open(goodreads_interactions, 'r') as f:
         #Data includes 230 million rows. Set i as per your device
-        i = 10000000
+        i = 100000000
         while (i):
             line = f.readline()
 
@@ -101,7 +101,7 @@ def rec_books (liked_books) :
 
     with open(goodreads_interactions, 'r') as f:
         #Set i as per your device
-        i = 10000000
+        i = 100000000
         while (i):
             line = f.readline()
 

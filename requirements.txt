@@ -1,0 +1,10 @@
+django
+django-cors-headers
+djangorestframework
+numpy
+matplotlib
+pandas
+scikit-learn
+sklearn
+django-cors-headers
+jsonfield
