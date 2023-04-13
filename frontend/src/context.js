@@ -3,7 +3,7 @@ import { useCallback } from 'react'
 import {useCookies} from "react-cookie"
 import {v4 as uuid} from 'uuid'
 
-const url = 'http://127.0.0.1:8000/api/'
+const url = '/api/'
 const AppContext = React.createContext()
 const user_id = uuid().slice(0, 8);
 let books_id = [user_id, "213030", "25545994", "18859629", "148020", "15844113", "25030367", "475675", "2214140"]

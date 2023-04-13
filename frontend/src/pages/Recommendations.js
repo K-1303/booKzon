@@ -9,14 +9,16 @@ const About = () => {
   if(recLoading) {
     return (
       <div>
-        <Loading />
-        <div className='cocktail-footer'><h2>Creating  Recommendations.....</h2></div>
+        <div className='section'>
+          <h2 className='recommendations-heading'>Creating  Recommendations.....</h2></div>
+          <Loading />
       </div>
     )
   }
 
   return (
     <section className='section'>
+      <h2 className='recommendations-heading'>Recommendations</h2>
       <div className='cocktails-center'>
         {recBooks.map((item)=>{
           return <Book key={item.id} {...item}/>

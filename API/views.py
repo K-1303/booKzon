@@ -27,7 +27,7 @@ def parse_fields(line):
     }
 
 books_titles = []
-books_json = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data\goodreads_books.json.gz')
+books_json = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data/goodreads_books.json.gz')
 
 with gzip.open(books_json, 'r') as f:
     while (True):
@@ -58,7 +58,7 @@ tfidf = vectorizer.fit_transform(titles["mod_title"])
 
 
 csv_book_mapping = {}
-book_id_map = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data\\book_id_map.csv')
+book_id_map = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data//book_id_map.csv')
 
 with open(book_id_map, 'r') as f:
     while True :
@@ -70,7 +70,7 @@ with open(book_id_map, 'r') as f:
 
 def rec_books (liked_books) :
     overlap_users = set()
-    goodreads_interactions = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data\goodreads_interactions.csv')
+    goodreads_interactions = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data/goodreads_interactions.csv')
     with open(goodreads_interactions, 'r') as f:
         #Data includes 230 million rows. Set i as per your device
         i = 100000000
