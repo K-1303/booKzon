@@ -1,6 +1,5 @@
 from email.policy import default
 from django.db import models
-from jsonfield import JSONField
 
 class Books(models.Model):
 
