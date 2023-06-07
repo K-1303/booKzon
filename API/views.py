@@ -15,7 +15,7 @@ import json
 
 vectorizer = TfidfVectorizer()
 
-books_json = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'books_titles.json')
+books_json = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data/books_titles.json')
     
 titles = pd.read_json(books_json)
 titles["ratings"] = pd.to_numeric(titles["ratings"])
