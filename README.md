@@ -21,10 +21,8 @@ A book recommendation website where you can search your favorite books and based
 ### Datasets
 The datasets were collected in late 2017 from goodreads.com, where we only scraped users' public shelves, i.e. everyone can see it on web without login. User IDs and review IDs are anonymized. 
 
-To download data files follow below links:
-- [books.json](https://drive.google.com/drive/folders/1NiEmdzRF2R5aHhyYHsVHII5a8VTgBdeG?usp=drive_link) 
-- [goodreads_interactions.csv](https://drive.google.com/uc?id=1zmylV7XW2dfQVCLeg1LbllfQtHD2KUon&export=download)
-- [book_id_map.csv](https://drive.google.com/uc?id=1CHTAaNwyzvbi1TR08MJrJ03BxA266Yxr)
+To download data files follow below link:
+- https://drive.google.com/drive/folders/1NiEmdzRF2R5aHhyYHsVHII5a8VTgBdeG?usp=drive_link
 
 Make a folder of name:'Data' in API folder and put these files into it.
 

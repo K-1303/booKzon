@@ -15,7 +15,7 @@ import json
 
 vectorizer = TfidfVectorizer()
 
-books_json = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data/books_titles.json')
+books_json = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data/books.json')
     
 titles = pd.read_json(books_json)
 titles["ratings"] = pd.to_numeric(titles["ratings"])
@@ -48,6 +48,9 @@ def search_book (request, query='') :
         serializer = LeadSerializer(books, many=True)
         return Response(serializer.data, template_name=None)
 
+book_id_map = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data/book_id_map.csv')
+csv_book_mapping = {}
+
 with open(book_id_map, 'r') as f:
     while True :
         line = f.readline()
@@ -58,11 +61,10 @@ with open(book_id_map, 'r') as f:
         
 def rec_books (liked_books) :
     overlap_users = set()
-    goodreads_interactions = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data/goodreads_interactions.csv')
-    with open(goodreads_interactions, 'r') as f:
+    Users = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data/users.csv')
+    with open(Users, 'r') as f:
         #Data includes 230 million rows. Set i as per your device
-        i = 100000000
-        while (i):
+        while (True):
             line = f.readline()
 
             if not line:
@@ -83,14 +85,12 @@ def rec_books (liked_books) :
             if book_id in liked_books and rating >= 4 :
                 overlap_users.add(user_id)
         
-            i = i - 1
+    
 
     rec_lines = []
 
-    with open(goodreads_interactions, 'r') as f:
-        #Set i as per your device
-        i = 100000000
-        while (i):
+    with open(Users, 'r') as f:
+        while (True):
             line = f.readline()
 
             if not line:
@@ -102,7 +102,7 @@ def rec_books (liked_books) :
                 book_id = csv_book_mapping[csv_id]
                 rec_lines.append([user_id, book_id, rating])
         
-            i = i - 1
+            
    
     recs = pd.DataFrame(rec_lines, columns=["user_id", "book_id", "rating"])
     recs["book_id"] = recs["book_id"].astype(str)
@@ -110,8 +110,8 @@ def rec_books (liked_books) :
     top_recs = recs["book_id"].value_counts().head(10)
     top_recs = top_recs.index.values
     
-    book_titles_json = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'books_titles.json')
-    books_titles = pd.read_json(book_titles_json)
+    book_json = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'Data/books.json')
+    books_titles = pd.read_json(book_json)
     books_titles["book_id"] = books_titles["book_id"].astype(str)
     books_titles[books_titles["book_id"].isin(top_recs)]  
 
