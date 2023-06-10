@@ -19,15 +19,13 @@ A book recommendation website where you can search your favorite books and based
 2. React(Frontend)
 
 ### Datasets
-The datasets were collected in late 2017 from goodreads.com, where we only scraped users' public shelves, i.e. everyone can see it on web without login. User IDs and review IDs are anonymized. 
-
 To download data files follow below link:
 - https://drive.google.com/drive/folders/1NiEmdzRF2R5aHhyYHsVHII5a8VTgBdeG?usp=drive_link
 
 Make a folder of name:'Data' in API folder and put these files into it.
 
 ### Setup
-Run these commands in terminal to run the project:
+Run these commands in terminal to run e project:
 - `pip install -r requirements.txt` to install backend dependencies
 - `cd frontend` to access frontend folder
 - `npm install` to intall frontend dependencies
