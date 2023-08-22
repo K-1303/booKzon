@@ -3,8 +3,6 @@ A book recommendation website where you can search your favorite books and based
 ## Screenshots
 ### Search Page
 
-<img src="screenshots/Search1.png" width="500">
-<img src="screenshots/Search2.png" width="500">
 <img src="screenshots/Search3.png" width="500">
 <img src="screenshots/Search4.png" width="500">
 
@@ -12,7 +10,6 @@ A book recommendation website where you can search your favorite books and based
 
 <img src="screenshots/Recommendation1.png" width="500">
 <img src="screenshots/Recommendation2.png" width="500">
-<img src="screenshots/Recommendation3.png" width="500">
 
 ### Tech Stack 
 1. Django(Backend)
